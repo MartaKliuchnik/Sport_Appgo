@@ -5,18 +5,9 @@ import TabelPage from '../../pages/tabel-page/TabelPage';
 import { useEffect, useState } from 'react';
 import { Context } from '../../context';
 
-// fetch('https://php74.appgo.pl/sport_api/api/public/api/teams')
-// 	.then((res) => res.json())
-// 	.then((team) => console.log(team));
-
-// fetch(
-// 	'https://php74.appgo.pl/sport_api/api/public/api/games?page=1&onPage=5&orderDirection=desc&orderBy=round'
-// )
-// 	.then((res) => res.json())
-// 	.then((team) => console.log(team));
-
 function App() {
 	const [tableInfo, setTableInfo] = useState([]);
+	const [gamesInfo, setGamesInfo] = useState([]);
 
 	async function getTableInfo() {
 		try {
@@ -28,14 +19,28 @@ function App() {
 		}
 	}
 
+	async function getGamesInfo() {
+		try {
+			await fetch(
+				'https://php74.appgo.pl/sport_api/api/public/api/games?page=1&onPage=130&orderDirection=desc&orderBy=round'
+			)
+				.then((res) => res.json())
+				.then((json) => setGamesInfo(json.data));
+		} catch (error) {
+			console.error('Error:', error);
+		}
+	}
+
 	useEffect(() => {
 		getTableInfo();
+		getGamesInfo();
 	}, []);
 
 	return (
 		<Context.Provider
 			value={{
 				tableInfo,
+				gamesInfo,
 			}}
 		>
 			<Header />

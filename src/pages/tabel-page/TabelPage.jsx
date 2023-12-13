@@ -7,7 +7,6 @@ import TableGradation from '../../components/tabel-gradation/TabelGradation';
 
 function TabelPage() {
 	const { tableInfo } = useContext(Context);
-	console.log(tableInfo);
 
 	const tableHeaderInfo = ['LP.', 'DRUŻYNA', 'M', 'B', 'RB', 'P'];
 

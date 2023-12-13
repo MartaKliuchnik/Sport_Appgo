@@ -8,10 +8,15 @@ function ActiveButton({ children, props }) {
 			? { border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }
 			: {};
 
+	const styleLink =
+		props === 'Border'
+			? { border: '1px solid #d5e0e8', padding: '10px', borderRadius: '5px' }
+			: {};
+
 	const linkItem = children === 'Mecze' ? '/' : '/tabela';
 
 	return (
-		<div className={s.linkContainer}>
+		<div className={s.linkContainer} style={styleLink}>
 			<Link to={linkItem} style={styleButton}>
 				{children}
 			</Link>
