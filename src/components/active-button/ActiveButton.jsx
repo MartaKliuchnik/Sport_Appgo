@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import s from './Index.module.sass';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
@@ -5,16 +6,15 @@ function ActiveButton({ children, props }) {
 	const styleButton =
 		props === 'nonBorder'
 			? { border: 'none', backgroundColor: 'transparent', cursor: 'pointer' }
-			: {
-					border: '1px solid #dae4ea',
-					borderRadius: '5px',
-					backgroundColor: 'transparent',
-					cursor: 'pointer',
-			  };
+			: {};
+
+	const linkItem = children === 'Mecze' ? '/' : '/tabela';
 
 	return (
 		<div className={s.linkContainer}>
-			<button style={styleButton}>{children}</button>
+			<Link to={linkItem} style={styleButton}>
+				{children}
+			</Link>
 
 			<div className={s.imgContainer}>
 				<ArrowRightOutlined

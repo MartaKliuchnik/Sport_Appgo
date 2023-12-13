@@ -5,6 +5,16 @@ import TabelPage from '../../pages/tabel-page/TabelPage';
 import { useEffect, useState } from 'react';
 import { Context } from '../../context';
 
+// fetch('https://php74.appgo.pl/sport_api/api/public/api/teams')
+// 	.then((res) => res.json())
+// 	.then((team) => console.log(team));
+
+// fetch(
+// 	'https://php74.appgo.pl/sport_api/api/public/api/games?page=1&onPage=5&orderDirection=desc&orderBy=round'
+// )
+// 	.then((res) => res.json())
+// 	.then((team) => console.log(team));
+
 function App() {
 	const [tableInfo, setTableInfo] = useState([]);
 
