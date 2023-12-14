@@ -1,18 +1,31 @@
 import { useContext } from 'react';
 import InfoLine from '../../components/info-line/InfoLine';
 import { Context } from '../../context';
-import RoundItem from '../../components/round-item/RoundItem';
+import GameItem from '../../components/game-item/GameItem';
+import s from './Index.module.sass';
 
 function HomePage() {
-	const { gamesInfo } = useContext(Context);
-	console.log(gamesInfo);
+	const { gamesShow } = useContext(Context);
+
+	const uniqueRounds = new Set(gamesShow.map((game) => game.round));
 
 	return (
 		<div className='wrapper'>
 			<InfoLine children={'Tabela'} />
 
-			{gamesInfo.map((game) => (
-				<RoundItem {...game} />
+			{Array.from(uniqueRounds).map((round) => (
+				<div key={round}>
+					<div className={s.roundContainer}>
+						<p>RUNDA {round}</p>
+					</div>
+					{gamesShow.map((game) => {
+						if (game.round === round) {
+							return <GameItem key={game.id} {...game} />;
+						} else {
+							return null;
+						}
+					})}
+				</div>
 			))}
 		</div>
 	);

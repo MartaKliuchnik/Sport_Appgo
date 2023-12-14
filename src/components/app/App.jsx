@@ -8,6 +8,7 @@ import { Context } from '../../context';
 function App() {
 	const [tableInfo, setTableInfo] = useState([]);
 	const [gamesInfo, setGamesInfo] = useState([]);
+	const [gamesShow, setGamesShow] = useState([]);
 
 	async function getTableInfo() {
 		try {
@@ -25,10 +26,17 @@ function App() {
 				'https://php74.appgo.pl/sport_api/api/public/api/games?page=1&onPage=130&orderDirection=desc&orderBy=round'
 			)
 				.then((res) => res.json())
-				.then((json) => setGamesInfo(json.data));
+				.then((json) =>
+					setGamesInfo(json.data.sort((a, b) => a.round - b.round))
+				);
 		} catch (error) {
 			console.error('Error:', error);
 		}
+	}
+
+	function getShowingGames(games) {
+		setGamesShow(games.filter((el) => el.round <= 3));
+		console.log(gamesShow);
 	}
 
 	useEffect(() => {
@@ -36,11 +44,16 @@ function App() {
 		getGamesInfo();
 	}, []);
 
+	useEffect(() => {
+		getShowingGames(gamesInfo);
+	}, [gamesInfo]);
+
 	return (
 		<Context.Provider
 			value={{
 				tableInfo,
 				gamesInfo,
+				gamesShow,
 			}}
 		>
 			<Header />
