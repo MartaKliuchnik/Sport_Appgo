@@ -9,6 +9,7 @@ function App() {
 	const [tableInfo, setTableInfo] = useState([]);
 	const [gamesInfo, setGamesInfo] = useState([]);
 	const [gamesShow, setGamesShow] = useState([]);
+	const [currentRound, setCurrentRound] = useState(0);
 
 	async function getTableInfo() {
 		try {
@@ -36,7 +37,38 @@ function App() {
 
 	function getShowingGames(games) {
 		setGamesShow(games.filter((el) => el.round <= 3));
-		console.log(gamesShow);
+	}
+
+	function updateGamesShow({ direction, currentRound }) {
+		if (direction === 'forward') {
+			currentRound === 12
+				? setGamesShow(
+						gamesInfo.filter(
+							(game) =>
+								game.round > currentRound && game.round <= currentRound + 1
+						)
+				  )
+				: setGamesShow(
+						gamesInfo.filter(
+							(game) =>
+								game.round > currentRound && game.round <= currentRound + 3
+						)
+				  );
+		} else if (direction === 'backward' && currentRound > 3) {
+			currentRound === 13
+				? setGamesShow(
+						gamesInfo.filter(
+							(game) =>
+								game.round <= currentRound - 1 && game.round > currentRound - 4
+						)
+				  )
+				: setGamesShow(
+						gamesInfo.filter(
+							(game) =>
+								game.round <= currentRound - 3 && game.round > currentRound - 6
+						)
+				  );
+		}
 	}
 
 	useEffect(() => {
@@ -52,8 +84,9 @@ function App() {
 		<Context.Provider
 			value={{
 				tableInfo,
-				gamesInfo,
 				gamesShow,
+				setGamesShow,
+				updateGamesShow,
 			}}
 		>
 			<Header />
