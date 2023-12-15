@@ -9,7 +9,7 @@ function App() {
 	const [tableInfo, setTableInfo] = useState([]);
 	const [gamesInfo, setGamesInfo] = useState([]);
 	const [gamesShow, setGamesShow] = useState([]);
-	const [currentRound, setCurrentRound] = useState(0);
+	const [allGamesShow, setAllGamesShow] = useState(false);
 
 	async function getTableInfo() {
 		try {
@@ -35,37 +35,41 @@ function App() {
 		}
 	}
 
-	function getShowingGames(games) {
-		setGamesShow(games.filter((el) => el.round <= 3));
+	function getShowingGames() {
+		setGamesShow(gamesInfo.filter((el) => el.round <= 3));
 	}
 
-	function updateGamesShow({ direction, currentRound }) {
+	useEffect(() => {
+		if (allGamesShow) {
+			setGamesShow(gamesInfo);
+		} else {
+			getShowingGames();
+		}
+	}, [allGamesShow]);
+
+	function updateGamesShow({ direction, round }) {
 		if (direction === 'forward') {
-			currentRound === 12
+			round === 12
 				? setGamesShow(
 						gamesInfo.filter(
-							(game) =>
-								game.round > currentRound && game.round <= currentRound + 1
+							(game) => game.round > round && game.round <= round + 1
 						)
 				  )
 				: setGamesShow(
 						gamesInfo.filter(
-							(game) =>
-								game.round > currentRound && game.round <= currentRound + 3
+							(game) => game.round > round && game.round <= round + 3
 						)
 				  );
-		} else if (direction === 'backward' && currentRound > 3) {
-			currentRound === 13
+		} else if (direction === 'backward' && round > 3) {
+			round === 13
 				? setGamesShow(
 						gamesInfo.filter(
-							(game) =>
-								game.round <= currentRound - 1 && game.round > currentRound - 4
+							(game) => game.round <= round - 1 && game.round > round - 4
 						)
 				  )
 				: setGamesShow(
 						gamesInfo.filter(
-							(game) =>
-								game.round <= currentRound - 3 && game.round > currentRound - 6
+							(game) => game.round <= round - 3 && game.round > round - 6
 						)
 				  );
 		}
@@ -77,7 +81,7 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		getShowingGames(gamesInfo);
+		getShowingGames();
 	}, [gamesInfo]);
 
 	return (
@@ -87,6 +91,8 @@ function App() {
 				gamesShow,
 				setGamesShow,
 				updateGamesShow,
+				allGamesShow,
+				setAllGamesShow,
 			}}
 		>
 			<Header />
