@@ -16,10 +16,8 @@ function ActiveButton({ children, props }) {
 	const linkItem = children === 'Mecze' ? '/' : '/tabela';
 
 	return (
-		<div className={s.linkContainer} style={styleLink}>
-			<Link to={linkItem} style={styleButton}>
-				{children}
-			</Link>
+		<Link to={linkItem} className={s.linkContainer} style={styleButton}>
+			{children}
 
 			<div className={s.imgContainer}>
 				<ArrowRightOutlined
@@ -29,7 +27,7 @@ function ActiveButton({ children, props }) {
 					}}
 				/>
 			</div>
-		</div>
+		</Link>
 	);
 }
 
