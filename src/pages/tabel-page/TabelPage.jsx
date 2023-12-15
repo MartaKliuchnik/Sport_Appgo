@@ -4,6 +4,7 @@ import InfoLine from '../../components/info-line/InfoLine';
 import s from './Index.module.sass';
 import TabelItem from '../../components/tabel-item/TabelItem';
 import TableGradation from '../../components/tabel-gradation/TabelGradation';
+import Spinner from '../../components/spinner/Spinner';
 
 function TabelPage() {
 	const { tableInfo } = useContext(Context);
@@ -26,9 +27,11 @@ function TabelPage() {
 				))}
 			</div>
 
-			{tableInfo.map((el) => (
-				<TabelItem key={el.team.id} {...el} />
-			))}
+			{tableInfo.length === 0 ? (
+				<Spinner />
+			) : (
+				tableInfo.map((el) => <TabelItem key={el.team.id} {...el} />)
+			)}
 
 			<div className={s.gradationContainer}>
 				{tableGradation.map((item) => (

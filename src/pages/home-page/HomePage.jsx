@@ -4,6 +4,7 @@ import { Context } from '../../context';
 import GameItem from '../../components/game-item/GameItem';
 import s from './Index.module.sass';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import Spinner from '../../components/spinner/Spinner';
 
 function HomePage() {
 	const { gamesShow, updateGamesShow, allGamesShow, setAllGamesShow } =
@@ -27,20 +28,24 @@ function HomePage() {
 
 				<InfoLine children={'Tabela'} />
 
-				{Array.from(uniqueRounds).map((round) => (
-					<div key={round}>
-						<div className={s.roundContainer}>
-							<p>RUNDA {round}</p>
+				{gamesShow.length === 0 ? (
+					<Spinner />
+				) : (
+					Array.from(uniqueRounds).map((round) => (
+						<div key={round}>
+							<div className={s.roundContainer}>
+								<p>RUNDA {round}</p>
+							</div>
+							{gamesShow.map((game) => {
+								if (game.round === round) {
+									return <GameItem key={game.id} {...game} />;
+								} else {
+									return null;
+								}
+							})}
 						</div>
-						{gamesShow.map((game) => {
-							if (game.round === round) {
-								return <GameItem key={game.id} {...game} />;
-							} else {
-								return null;
-							}
-						})}
-					</div>
-				))}
+					))
+				)}
 			</div>
 
 			{!allGamesShow ? (
