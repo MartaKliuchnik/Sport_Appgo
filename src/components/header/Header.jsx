@@ -1,4 +1,4 @@
-import NavItem from '../../assets/navHeader.png';
+import NavItem from '../../assets/Navheader.png';
 import s from './Index.module.sass';
 
 function Header() {
