@@ -34,20 +34,34 @@ function HomePage() {
 
 			<div className={s.navigation}>
 				<div
+					style={cur === 3 ? { color: '#eaebed' } : {}}
 					onClick={() => {
 						updateGamesShow({ direction: 'backward', currentRound: cur });
 					}}
 				>
-					<LeftOutlined style={{ color: '#fc5c16', fontSize: '10px' }} />
+					<LeftOutlined
+						style={
+							cur === 3
+								? { color: '#eaebed', fontSize: '10px' }
+								: { color: '#fc5c16', fontSize: '10px' }
+						}
+					/>
 					<p>Wstecz</p>
 				</div>
 				<div
+					style={cur === 13 ? { color: '#eaebed' } : {}}
 					onClick={() => {
 						updateGamesShow({ direction: 'forward', currentRound: cur });
 					}}
 				>
 					<p>Dalej</p>
-					<RightOutlined style={{ color: '#fc5c16', fontSize: '10px' }} />
+					<RightOutlined
+						style={
+							cur === 13
+								? { color: '#eaebed', fontSize: '10px' }
+								: { color: '#fc5c16', fontSize: '10px' }
+						}
+					/>
 				</div>
 			</div>
 		</div>
